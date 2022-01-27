@@ -1,6 +1,3 @@
-from turtle import color
-
-
 class Pen:
     def __init__(self, inkContainerValue = 1000, sizeLetter = 1.0, color = "BLUE"):
         self.inkContainerValue = inkContainerValue # сколько чернила в ручке
@@ -16,7 +13,7 @@ class Pen:
             self.inkContainerValue -= sizeOfWord
             return word
 
-        partOfWord = word[0, self.inkContainerValue]
+        partOfWord = word[0: self.inkContainerValue]
         inkContainerValue = 0
         return partOfWord
 
@@ -29,3 +26,12 @@ class Pen:
 
     def doSomethingElse(self):
         print(self.color)
+
+
+a = Pen(color='RED')
+
+print(a.getColor())
+# print(a.isWork())
+# print(a.write("Hello!"))
+# print(a.inkContainerValue)
+# print(a.doSomethingElse())
