@@ -10,19 +10,15 @@ class TestPen:
         testValue = a.isWork()
         assert testValue == True
 
-    def test_isWork_zeroValue(self):
-        a = Pen(inkContainerValue= 0)
+    @pytest.mark.parametrize("containerValue,expectedResult", [(1,True),
+    (0,False),
+    (-1,False),
+    pytest.param("txt", "ERROR", marks=pytest.mark.xfail(reason="Expected! Can't compare <str> and <int>.")),
+    ])
+    def test_isWork(self, containerValue, expectedResult):
+        a = Pen(inkContainerValue= containerValue)
         testValue = a.isWork()
-        assert testValue == False
-
-    def test_isWork_negativeValue(self):
-        a = Pen(inkContainerValue= -1)
-        testValue = a.isWork()
-        assert testValue == False
-
-    @pytest.mark.xfail(reason="Expected! Can't compare <str> and <int>.")
-    def test_isWork_notNumber(self):
-        a = Pen(inkContainerValue= "txt")
+        assert testValue == expectedResult
 
     # getColor() method tests
     def test_getColor_defaults(self):
@@ -34,3 +30,6 @@ class TestPen:
         a = Pen(color= "RED")
         testValue = a.getColor()
         assert testValue == "RED"
+
+
+    #_________________________JUST IN CASE__________________________
