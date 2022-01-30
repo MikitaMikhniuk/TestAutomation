@@ -1,5 +1,5 @@
 class Pen:
-    def __init__(self, inkContainerValue = 1000, sizeLetter = 1.0, color = "BLUE"):
+    def __init__(self, inkContainerValue = 1000, sizeLetter = 1.0, color = "RED"):
         self.inkContainerValue = inkContainerValue  # сколько чернила в ручке
         self.sizeLetter = sizeLetter  # размер букв, которые пишутся ручкой
         self.color = color  # цвет ручки
@@ -14,7 +14,7 @@ class Pen:
             return word
 
         partOfWord = word[0: self.inkContainerValue]
-        inkContainerValue = 0
+        self.inkContainerValue = 0
         return partOfWord
 
     #BUGGGGGGGGGGGGGGGG
@@ -28,10 +28,10 @@ class Pen:
         print(self.color)
 
 
-a = Pen(color=12)
+a = Pen()
 
-print(a.getColor())
+# print(a.getColor())
 # print(a.isWork())
-# print(a.write(""))
+# print(a.write("qwerty"))
 # print(a.inkContainerValue)
-# print(a.doSomethingElse())
+print(a.doSomethingElse())
