@@ -54,7 +54,7 @@ class TestPen:
 
     @pytest.mark.parametrize("word, expectedResult", [("Hey!","Hey!"), ("Privet", "Privet")])
     def test_sizeOfWord(self, word, expectedResult):
-        a = Pen(nkContainerValue = 6)
+        a = Pen(inkContainerValue = 6)
         wordReturn = a.write(word)
         assert wordReturn == expectedResult
 
