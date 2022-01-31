@@ -26,12 +26,3 @@ class Pen:
 
     def doSomethingElse(self):
         print(self.color)
-
-
-a = Pen()
-
-# print(a.getColor())
-# print(a.isWork())
-# print(a.write("qwerty"))
-# print(a.inkContainerValue)
-print(a.doSomethingElse())
