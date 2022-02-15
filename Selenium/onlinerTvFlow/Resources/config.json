@@ -1,6 +1,4 @@
 {
-    "driver_config":{
-        "URL":"onliner.by",
-        "BROWSER" : "Chrome"
-      }
+  "URL":"https://www.onliner.by/",
+  "BROWSER" : "Chrome"
 }
