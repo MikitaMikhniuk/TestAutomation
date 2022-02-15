@@ -58,4 +58,5 @@ def test_onliner_tv_flow(setup, test_data):
         assert float(min_size)/10 <= float(size.replace('"', '')) <= float(max_size)/10
 
     for item_price in results.find_item_prices():
-        assert int(item_price.text) <= int(max_price)
+        price = item_price.text.replace('\u00A0р.', '')
+        assert int(price) <= int(max_price)
