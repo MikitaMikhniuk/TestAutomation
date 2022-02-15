@@ -7,4 +7,4 @@ python3 -m venv selen_env
 selen_env\Scripts\pip install pytest
 selen_env\Scripts\pip install selenium
 selen_env\Scripts\pip install pytest-html
-selen_env\Scripts\python -m pytest Selenium --html=results.html --self-contained-html > results.html
+selen_env\Scripts\python -m pytest tests/_test.py --html=results.html --self-contained-html > results.html
