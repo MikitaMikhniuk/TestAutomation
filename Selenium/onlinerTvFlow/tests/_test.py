@@ -1,7 +1,7 @@
-from Pages.conftest import driverSetUp
-from Pages.landing_page import LandingPage
-from Pages.catalog_page import CatalogPage
-from Pages.result_page import ResultPage
+from pages.conftest import driverSetUp
+from pages.landing_page import LandingPage
+from pages.catalog_page import CatalogPage
+from pages.result_page import ResultPage
 import pytest
 import json
 
@@ -13,7 +13,7 @@ def setup():
 
 @pytest.fixture
 def test_data():
-    file = open("Selenium\onlinerTvFlow\Test\\test_data.json")
+    file = open("tests\\test_data.json")
     data = json.load(file)
     yield data
 

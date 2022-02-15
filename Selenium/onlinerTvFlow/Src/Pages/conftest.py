@@ -7,7 +7,7 @@ import json
 class DriverSetUp:
 
     def setUp(self):
-        file = open("Selenium\onlinerTvFlow\Resources\config.json")
+        file = open("resources\config.json")
         data = json.load(file)
         if data["BROWSER"] == "Chrome":
             driver = webdriver.Chrome(ChromeDriverManager().install())
@@ -22,7 +22,7 @@ class DriverSetUp:
             print("Sorry! I don't know such driver yet!")
 
     def goTo(self, driver):
-        file    = open("Selenium\onlinerTvFlow\Resources\config.json")
+        file    = open("resources\config.json")
         data = json.load(file)
         driver.maximize_window()
         driver.get(data["URL"])

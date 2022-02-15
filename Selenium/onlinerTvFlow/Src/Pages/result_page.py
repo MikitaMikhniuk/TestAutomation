@@ -12,7 +12,10 @@ class ResultPage():
     def click_on_filter_checkbox(self, keyword):
         filter_checkbox = self.driver.find_element(By.XPATH, f'//span[@class="schema-filter__checkbox-text" and text()="{keyword}"]')
         actions = ActionChains(self.driver)
-        actions.move_to_element(filter_checkbox).click().perform()
+        actions.move_to_element(filter_checkbox)
+        wait = WebDriverWait(self.driver, 30)
+        wait.until(EC.visibility_of_element_located((By.XPATH, f'//span[@class="schema-filter__checkbox-text" and text()="{keyword}"]')))
+        filter_checkbox.click()
         return filter_checkbox
     
     def set_min_price(self, min_price):
