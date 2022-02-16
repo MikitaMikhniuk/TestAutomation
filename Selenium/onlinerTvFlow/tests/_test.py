@@ -2,8 +2,10 @@ from pages.conftest import driverSetUp
 from pages.landing_page import LandingPage
 from pages.catalog_page import CatalogPage
 from pages.result_page import ResultPage
+from selenium.common.exceptions import StaleElementReferenceException
 import pytest
 import json
+import time
 
 @pytest.fixture
 def setup():
@@ -40,14 +42,15 @@ def test_onliner_tv_flow(setup, test_data):
     catalog.click_on_aside_item("Телевизоры")
 
     results = ResultPage(driver)
+    results.verify_result_page()
     results.click_on_filter_checkbox(vendor)
-    results.scroll_a_litlle_bit()  # КОСТЫЛЬ!
     results.set_max_price(max_price)
     results.click_on_filter_checkbox(resolution)
     results.set_min_size(min_size)
     results.set_max_size(max_size)
     results.wait_for_filter_results()
     
+
     for item_header in results.find_item_headers():
         assert f"Телевизор {vendor}" in item_header.text
 
@@ -55,8 +58,14 @@ def test_onliner_tv_flow(setup, test_data):
         assert resolution in item_description.text
         description_list = item_description.text.split()
         size = description_list[0]
-        assert float(min_size)/10 <= float(size.replace('"', '')) <= float(max_size)/10
+        assert (float(min_size))/10 <= float(size.replace('"', '')) <= (float(max_size))/10
 
     for item_price in results.find_item_prices():
         price = item_price.text.replace('\u00A0р.', '')
-        assert int(price) <= int(max_price)
+        assert int(price) <= int(max_price) 
+
+# def stale_decorator(function):
+#     try:
+#         function()
+#     except StaleElementReferenceException:
+#         function()

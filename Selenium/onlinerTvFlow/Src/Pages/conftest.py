@@ -22,7 +22,7 @@ class DriverSetUp:
             print("Sorry! I don't know such driver yet!")
 
     def goTo(self, driver):
-        file    = open("resources\config.json")
+        file = open("resources\config.json")
         data = json.load(file)
         driver.maximize_window()
         driver.get(data["URL"])
