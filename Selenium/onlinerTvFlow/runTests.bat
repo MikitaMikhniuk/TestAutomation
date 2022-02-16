@@ -9,4 +9,4 @@ test_env\Scripts\pip install selenium
 test_env\Scripts\pip install webdriver_manager
 test_env\Scripts\pip install pytest-html
 test_env\Scripts\pip install pytest-repeat  
-test_env\Scripts\python -m pytest --html=results.html --self-contained-html --count=10
+test_env\Scripts\python -m pytest --html=results.html --self-contained-html
