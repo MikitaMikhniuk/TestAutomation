@@ -58,6 +58,8 @@ class ResultPage():
         return max_size_input
 
     def find_item_headers(self):
+        wait = WebDriverWait(self.driver, 5)
+        wait.until_not(EC.presence_of_element_located((By.XPATH, '//div[@class="schema-products schema-products_processing"]')))
         item_headers = self.driver.find_elements(By.XPATH, '//span[contains(@data-bind,"html: product.extended_name || product.full_name")]')
         return item_headers
 
