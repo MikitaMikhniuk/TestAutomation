@@ -20,10 +20,6 @@ class DriverFactory:
         factory_config = json.load(config_file)
 
         default_download_path = os.path.join(os.getcwd(), factory_config["DEFAULT_DOWNLOAD_PATH"])
-        
-        with open("a.txt", 'w') as f:
-            f.write(os.getcwd() + ' ' + default_download_path)
-
         if factory_config["BROWSER"] == "Chrome":
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")

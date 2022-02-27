@@ -1,9 +1,8 @@
-
 from selenium.webdriver.common.by import By
-from framework.base.base_page import BasePage
+from page_objects.pages.base_steam_page import BaseSteamPage
 
 
-class MainPage(BasePage):
+class MainPage(BaseSteamPage):
 
     def __init__(self, driver):
         super().__init__(driver)
@@ -20,6 +19,7 @@ class MainPage(BasePage):
     def get_seubmenu_item(self, genre):
         element = self.SUBMENU_XPATH_LOCATOR.replace("genre", genre)
         submenu_item = self.driver.find_element(By.XPATH, element)
+        self.SELECTED_GENRE = genre
         return submenu_item, genre
 
     def navigate_menu(self, menu_item_name, submenu_item_name):
@@ -31,5 +31,6 @@ class MainPage(BasePage):
         return genre
 
     def click_download(self):
-        element = self.driver.find_element(By.XPATH, "//a[@class='about_install_steam_link']")
+        element = self.driver.find_element(
+            By.XPATH, "//a[@class='about_install_steam_link']")
         element.click()
