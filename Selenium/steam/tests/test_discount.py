@@ -17,7 +17,7 @@ def test_max_discount(setup, get_test_data):
         get_label(get_test_data["NAV_STEP_1"]), get_label(get_test_data["NAV_STEP_2"]))
 
     category_page = CategoryPage(driver)
-    category_page.verify_category_page(get_label("Action"))
+    category_page.verify_category_page(get_label(get_test_data["NAV_STEP_2"]))
 
     app_id = category_page.click_on_max_discount_game()
 
