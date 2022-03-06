@@ -1,46 +1,81 @@
+import random
+from framework.utils.lang_utils import get_label
+from page_objects.pages.base_steam_page import BaseSteamPage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-import random
-from page_objects.pages.base_steam_page import BaseSteamPage
-
-from framework.base.base_page import BasePage
 
 
 class CategoryPage(BaseSteamPage):
+    """
+    Steam Category page class.
+
+    Contains methods for working with Category page elements.
+    """
 
     def __init__(self, driver):
         super().__init__(driver)
 
-    DISCOUNTED_PRICES_LOCATOR = '//div[@class="contenthub_specials_grid"]//div[@class="discount_prices"]'
-    DISCOUNTED_PERCENTAGES_LOCATOR = '//a[@class="store_capsule app_impression_tracked"]//div[@class="discount_pct"]'
-    APPID_LOCATOR = '//a[@class="store_capsule app_impression_tracked"]'
-    RECOMMENDED_SPECIALS_ID = 'specials_container'
-    GAME_ITEM_LOCATOR = '//a[@class="store_capsule app_impression_tracked" and @data-ds-appid="GAME_ID"]'
-    PAGEHEADER_LOCATOR = '//h2[@class="pageheader"]'
+    PAGEHEADER_LOCATOR = '//div[@class="contenthubmaincarousel_ContentHubTitle_saHqN"]'
+    PAGEHEADER_ID = 'SaleSection_56339'
+    SPECIALS_SECTION_LOCATOR = '//div[@class="saleitembrowser_FlavorLabel_KDLAS Focusable" and text()="TAB"]'
+    DISCOUNTED_PERCENTAGES_LOCATOR = '//div[@class="facetedbrowse_FacetedBrowseInnerCtn_3vjDu"]//div[@class="salepreviewwidgets_StoreSaleDiscountBox_cnkoF"]'
+    APP_NAMES_LOCATOR = '//div[@class="salepreviewwidgets_StoreSaleWidgetTitle_2ekpT"]'
+    APP_LOCATOR = '//div[@class="salepreviewwidgets_TitleCtn_3rrH9"]/a[contains(@href, "APP_ID")]'
+    RECOMMENDED_SPECIALS_ID = 'SaleSection_13268'
+    APPID_LOCATOR = '//div[@class="salepreviewwidgets_TitleCtn_3rrH9"]//a'
+    CONTENT_LOCATOR = '//div[@class="facetedbrowse_FacetedBrowseItems_3EdZT"]'
+    GAME_ITEM = '//div[@class="salepreviewwidgets_SaleItemBrowserRow_gASJ2"]'
 
-    def verify_category_page(self):
+    def get_discount_locator(self):
+        """
+        Method is used to get Discount tab locator.
+
+        Returns -> Discount tab XPATH locator
+        """
+        discount_locator = self.SPECIALS_SECTION_LOCATOR.replace(
+            "TAB", get_label("Discounted"))
+        return discount_locator
+
+    def verify_category_page(self, genre):
+        """
+        Assertion methond to that currnet page is <input> page.
+
+        Input-> Genre (str). e.g. "Action".
+        """
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.ID, self.PAGEHEADER_ID)))
         category_header = self.driver.find_element(
             By.XPATH, self.PAGEHEADER_LOCATOR)
         category_header_text = (category_header.text).strip()
-        print(category_header_text)
-        print(self.SELECTED_GENRE)
-        assert category_header_text == "0"
-        assert self.SELECTED_GENRE == "0"
-        assert category_header_text == self.SELECTED_GENRE
+        assert category_header_text == genre
         return category_header_text
 
     def get_max_discount_recommended_special_item(self):
+        """
+        Method is used to find the app with the max discount.
+
+        Returns -> Max discount app element (Selenium element).
+        Returns -> Max discount app id (str).
+        """
         tab = self.driver.find_element(By.ID, self.RECOMMENDED_SPECIALS_ID)
-        self.scroll_element_into_view(tab)
-        app_id_elements = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_all_elements_located((By.XPATH, self.APPID_LOCATOR)))
-        discount_elements = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_all_elements_located((By.XPATH, self.DISCOUNTED_PERCENTAGES_LOCATOR)))
-        app_ids = []
+        self.driver.execute_script("arguments[0].scrollIntoView();", tab)
+        WebDriverWait(self.driver, 10).until(EC.visibility_of(tab))
+        discounted_btn = self.driver.find_element(
+            By.XPATH, self.get_discount_locator())
+        self.driver.execute_script("arguments[0].click();", discounted_btn)
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_any_elements_located((By.XPATH, self.GAME_ITEM)))
+        discount_elements = self.driver.find_elements(
+            By.XPATH, self.DISCOUNTED_PERCENTAGES_LOCATOR)
+        app_id_elements = self.driver.find_elements(
+            By.XPATH, self.APPID_LOCATOR)
         discounts = []
-        for id_element in app_id_elements:
-            app_id = id_element.get_attribute("data-ds-appid")
+        app_ids = []
+        for app_id_element in app_id_elements:
+            app_link = app_id_element.get_attribute("href")
+            app_id = self.get_current_appid_from_link(app_link)
             app_ids.append(app_id)
         for discount_element in discount_elements:
             discount = discount_element.text
@@ -49,20 +84,23 @@ class CategoryPage(BaseSteamPage):
         max_discount_ids = [key for key,
                             value in res.items() if value == max(res.values())]
         if len(max_discount_ids) > 1:
-            game_id = random.choice(max_discount_ids)
-            game_item_locator = self.GAME_ITEM_LOCATOR.replace(
-                "GAME_ID", game_id)
-            element = self.driver.find_element(By.XPATH, game_item_locator)
-            return element, game_id
+            app_id = random.choice(max_discount_ids)
         else:
-            game_id = max_discount_ids[0]
-            game_item_locator = self.GAME_ITEM_LOCATOR.replace(
-                "GAME_ID", game_id)
-            element = self.driver.find_element(By.XPATH, game_item_locator)
-            return element, game_id
+            app_id = max_discount_ids[0]
+        app_locator = self.APP_LOCATOR.replace("APP_ID", app_id)
+        element = self.driver.find_element(By.XPATH, app_locator)
+        return element, app_id
 
     def click_on_max_discount_game(self):
-        element, id = self.get_max_discount_recommended_special_item()
+        """
+        A complex method is used to find the app with the max discount
+        and ckick on it.
+
+        Retruns -> Max discount app id (str).
+        """
+        element, app_id = self.get_max_discount_recommended_special_item()
+        action = ActionChains(self.driver)
+        action.move_to_element(element)
         element.click()
-        self.SELECTED_APP_ID = id
-        return id
+        self.driver.switch_to.window(self.driver.window_handles[-1])
+        return app_id

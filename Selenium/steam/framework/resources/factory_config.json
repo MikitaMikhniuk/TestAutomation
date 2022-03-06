@@ -1,7 +1,6 @@
 {
     "URL":"https://store.steampowered.com/",
-    "BROWSER" : "Chrome",
+    "BROWSER" : "Firefox",
     "HEADLESS_MODE": "False",
-    "DEFAULT_DOWNLOAD_PATH": "Selenium\\steam\\resources",
-    "SUPPORTED_LANGUAGES": ["ru", "en"]
+    "DEFAULT_DOWNLOAD_PATH": "Selenium\\steam\\resources\\downloads"
 }

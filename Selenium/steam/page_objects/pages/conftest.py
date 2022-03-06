@@ -3,6 +3,7 @@ import json
 
 CONFIG_PATH = "Selenium\\steam\\framework\\resources\\factory_config.json"
 
+
 @pytest.fixture(autouse=True)
 def get_factory_config():
     config_file = open(CONFIG_PATH)
