@@ -1,7 +1,9 @@
 from framework.base.base_page import BasePage
 from selenium.webdriver.common.by import By
 import time
+import json
 
+CONFIG_PATH = "framework\\resources\\factory_config.json"
 
 class BaseSteamPage(BasePage):
     """
@@ -13,6 +15,7 @@ class BaseSteamPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
+    DEFAULT_WAIT_TIME = 5
     SELECTED_APP_ID = None
     SELECTED_GENRE = None
     AGE_CHECK_BASE_URL = "https://store.steampowered.com/agecheck/app/"
@@ -85,3 +88,9 @@ class BaseSteamPage(BasePage):
             time.sleep(5)
         else:
             pass
+    
+    def get_factory_config(self):
+        config_file = open(CONFIG_PATH)
+        factory_config = json.load(config_file)
+        BaseSteamPage.DEFAULT_WAIT_TIME = factory_config["DEFAULT_WAIT_TIME"]
+        return factory_config

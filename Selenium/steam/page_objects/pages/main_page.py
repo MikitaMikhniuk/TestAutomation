@@ -48,7 +48,7 @@ class MainPage(BaseSteamPage):
         Input-> Menu label (str). Example: "Categories".
         Input-> Menu label (str). Example: "Action".
         """
-        WebDriverWait(self.driver, 10).until_not(EC.visibility_of_element_located((By.XPATH, self.MODAL_TAB)))
+        WebDriverWait(self.driver, self.DEFAULT_WAIT_TIME).until_not(EC.visibility_of_element_located((By.XPATH, self.MODAL_TAB)))
         menu_item = self.get_menu_tab(menu_item_name)
         menu_item.click()
         submenu_item, genre = self.get_seubmenu_item(submenu_item_name)

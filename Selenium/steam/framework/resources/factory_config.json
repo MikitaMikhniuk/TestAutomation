@@ -2,5 +2,6 @@
     "URL":"https://store.steampowered.com/",
     "BROWSER" : "Chrome",
     "HEADLESS_MODE": "False",
-    "DEFAULT_DOWNLOAD_PATH": "resources\\downloads"
+    "DEFAULT_DOWNLOAD_PATH": "resources\\downloads",
+    "DEFAULT_WAIT_TIME": "10"
 }

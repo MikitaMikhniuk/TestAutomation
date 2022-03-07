@@ -23,7 +23,7 @@ class AppPage(BaseSteamPage):
 
         Input-> app id (str).
         """
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, self.DEFAULT_WAIT_TIME).until(
             EC.visibility_of_element_located((By.ID, self.APP_NAME_ID)))
         id = self.get_current_appid_from_url()
         assert id == app_id

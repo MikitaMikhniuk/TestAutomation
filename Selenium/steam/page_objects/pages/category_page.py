@@ -27,6 +27,7 @@ class CategoryPage(BaseSteamPage):
     APPID_LOCATOR = '//div[@class="salepreviewwidgets_TitleCtn_3rrH9"]//a'
     CONTENT_LOCATOR = '//div[@class="facetedbrowse_FacetedBrowseItems_3EdZT"]'
     GAME_ITEM = '//div[@class="salepreviewwidgets_SaleItemBrowserRow_gASJ2"]'
+    
 
     def get_discount_locator(self):
         """
@@ -44,7 +45,7 @@ class CategoryPage(BaseSteamPage):
 
         Input-> Genre (str). e.g. "Action".
         """
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, self.DEFAULT_WAIT_TIME).until(
             EC.visibility_of_element_located((By.ID, self.PAGEHEADER_ID)))
         category_header = self.driver.find_element(
             By.XPATH, self.PAGEHEADER_LOCATOR)
@@ -61,11 +62,11 @@ class CategoryPage(BaseSteamPage):
         """
         tab = self.driver.find_element(By.ID, self.RECOMMENDED_SPECIALS_ID)
         self.driver.execute_script("arguments[0].scrollIntoView();", tab)
-        WebDriverWait(self.driver, 10).until(EC.visibility_of(tab))
+        WebDriverWait(self.driver, self.DEFAULT_WAIT_TIME).until(EC.visibility_of(tab))
         discounted_btn = self.driver.find_element(
             By.XPATH, self.get_discount_locator())
         self.driver.execute_script("arguments[0].click();", discounted_btn)
-        WebDriverWait(self.driver, 10).until(
+        WebDriverWait(self.driver, self.DEFAULT_WAIT_TIME).until(
             EC.visibility_of_any_elements_located((By.XPATH, self.GAME_ITEM)))
         discount_elements = self.driver.find_elements(
             By.XPATH, self.DISCOUNTED_PERCENTAGES_LOCATOR)
