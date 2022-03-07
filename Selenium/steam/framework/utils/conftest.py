@@ -1,7 +1,7 @@
 import pytest
 import json
 
-CONFIG_PATH = "Selenium\\steam\\framework\\resources\\factory_config.json"
+CONFIG_PATH = "framework\\resources\\factory_config.json"
 
 
 @pytest.fixture(scope="module")

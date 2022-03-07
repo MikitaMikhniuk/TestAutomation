@@ -7,7 +7,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxSerive
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from framework.utils.downloader import set_up_download_folder
 
-CONFIG_PATH = "Selenium\\steam\\framework\\resources\\factory_config.json"
+CONFIG_PATH = "framework\\resources\\factory_config.json"
 
 
 class DriverFactory:

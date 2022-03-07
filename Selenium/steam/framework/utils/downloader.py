@@ -1,7 +1,7 @@
 import os
 import time
 
-CONFIG_PATH = "Selenium\\steam\\framework\\resources\\factory_config.json"
+CONFIG_PATH = "framework\\resources\\factory_config.json"
 
 
 def set_up_download_folder(factory_config):
