@@ -1,4 +1,8 @@
+import codecs
 from framework.utils.nav_config import Nav
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 import os
 import json
 
@@ -16,7 +20,7 @@ def load_config():
             if filename.endswith('.json'):
                 lang_name = filename.replace(".json", "")
                 name = os.sep.join([dirpath, filename])
-                with open(name, "r", encoding="UTF-8") as f:
+                with codecs.open(name, "r", encoding="UTF-8") as f:
                     loc = json.load(f)
                     config[lang_name] = loc
     return config
@@ -25,15 +29,16 @@ def load_config():
 CONFIG = load_config()
 
 
-def get_label(key, lang=None):
+def get_label(driver, key, lang=None):
     """
     Method returs lang label for current lang.
 
     Input -> Key (str).
 
     Input (opt) -> Lang (str).
-
     """
+    element = driver.find_element(By.XPATH, '//html')
+    Nav.LANG = element.get_attribute("lang")
     l = Nav.LANG if not lang else lang
     if not l in CONFIG:
         raise Exception(f"Unsupported language {l}")

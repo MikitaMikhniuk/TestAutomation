@@ -10,7 +10,7 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    HTML_HEAD_LOCATOR = (By.XPATH, '//html[@class=" responsive"]')
+    HTML_HEAD_LOCATOR = '//html[@class=" responsive"]'
 
     def go_to(self, URL):
         """
@@ -39,7 +39,7 @@ class BasePage:
         Returns current page lang (str) based on HTML <head>.
         Example: "en".
         """
-        lang_element = self.driver.find_elemet(self.HTML_HEAD_LOCATOR)
+        lang_element = self.driver.find_element(By.XPATH, self.HTML_HEAD_LOCATOR)
         current_lang = lang_element.get_attribute("lang")
         return current_lang
 

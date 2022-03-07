@@ -15,6 +15,6 @@ def setup():
 @pytest.fixture
 def get_test_data():
     os.chdir("../../../../..")
-    test_data_file = open(CONFIG_PATH)
+    test_data_file = open(CONFIG_PATH, "r", encoding="UTF-8")
     test_data = json.load(test_data_file)
     return test_data

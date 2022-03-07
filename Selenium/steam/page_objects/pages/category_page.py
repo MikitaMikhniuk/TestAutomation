@@ -35,7 +35,7 @@ class CategoryPage(BaseSteamPage):
         Returns -> Discount tab XPATH locator
         """
         discount_locator = self.SPECIALS_SECTION_LOCATOR.replace(
-            "TAB", get_label("Discounted"))
+            "TAB", get_label(self.driver, "Discounted"))
         return discount_locator
 
     def verify_category_page(self, genre):
