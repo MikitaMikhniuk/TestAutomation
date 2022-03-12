@@ -25,10 +25,8 @@ class ResultPage(BasePage, BaseElement):
     ITEM_PRICES = '//span[@data-bind="html: $root.format.minPrice($data.prices, ''BYN'')"]'
     RESULT_PAGE_TITLE = '//h1[contains(@class,"schema-header__title")]'
 
-
-
     def click_on_filter_checkbox(self, keyword):
-        filter_checkbox = self.find_element_by_xpath(self.get_locator_with_replace_xpath(self.FILTER_CHECKBOX, "keyword", keyword))
+        filter_checkbox = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.FILTER_CHECKBOX, "keyword", keyword))
         self.scroll_element_into_view(filter_checkbox)
         actions = ActionChains(self.driver)
         actions.move_to_element(filter_checkbox).click().perform()
@@ -60,7 +58,7 @@ class ResultPage(BasePage, BaseElement):
         min_size_input = self.find_element_by_xpath(self.MIN_SIZE_INPUT)
         self.click_on_element(min_size_input)
         wait = WebDriverWait(self.driver, 5)
-        element = (By.XPATH, self.get_locator_with_replace_xpath(self.MIN_SIZE_VALUE_OPTION, "VALUE", value))
+        element = (By.XPATH, self.get_locator_with_replaced_xpath(self.MIN_SIZE_VALUE_OPTION, "VALUE", value))
         wait.until(EC.visibility_of_element_located(element))
         Select(min_size_input).select_by_value(value)
         wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
@@ -71,7 +69,7 @@ class ResultPage(BasePage, BaseElement):
         self.click_on_element(max_size_input)
         Select(max_size_input).select_by_value(value)
         wait = WebDriverWait(self.driver, 5)
-        element = (By.XPATH, self.get_locator_with_replace_xpath(self.MAX_SIZE_VALUE_OPTION, "VALUE", value))
+        element = (By.XPATH, self.get_locator_with_replaced_xpath(self.MAX_SIZE_VALUE_OPTION, "VALUE", value))
         wait.until(EC.visibility_of_element_located(element))
         self.click_on_element(max_size_input)
         wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
@@ -91,11 +89,11 @@ class ResultPage(BasePage, BaseElement):
         item_prices = self.find_elements_by_xpath(self.ITEM_PRICES)
         return item_prices
 
-    def verify_result_page(self):
+    def verify_result_page_by_header(self, header):
         result_page_header = self.find_element_by_xpath(self.RESULT_PAGE_TITLE)
         wait = WebDriverWait(self.driver, 5)    
         wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
-        assert result_page_header.text == "Телевизоры"
+        assert result_page_header.text == header
 
     def wait_for_filter_results(self):
         wait = WebDriverWait(self.driver, 5)

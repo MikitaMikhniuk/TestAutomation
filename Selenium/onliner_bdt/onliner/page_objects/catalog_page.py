@@ -18,30 +18,30 @@ class CatalogPage(BasePage, BaseElement):
     CATALOG_HEADER_FULL = '//div[@class="catalog-navigation__title"]'
     CATALOG_HEADER_SUPERPRICE = '//div[@class="catalog-navigation__title"]//a'
 
-    def click_on_nav_class(self, section):
-        nav_class = self.find_element_by_xpath(self.get_locator_with_replace_xpath(self.NAV_CLASS, "section", section))
+    def navigate_to_menu(self, section):
+        nav_class = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.NAV_CLASS, "section", section))
         self.click_on_element(nav_class)
         wait = WebDriverWait(self.driver, 5)
         wait.until(EC.visibility_of_any_elements_located(self.ASIDE_LIST))
         return nav_class
 
-    def click_on_nav_subclass(self, section):
-        nav_subclass = self.find_element_by_xpath(self.get_locator_with_replace_xpath(self.NAV_SUBCLASS, "section", section))
+    def navigate_to_submenu(self, section):
+        nav_subclass = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.NAV_SUBCLASS, "section", section))
         self.click_on_element(nav_subclass)
         wait = WebDriverWait(self.driver, 5)
         wait.until(EC.visibility_of_any_elements_located(self.NAV_LIST))
         return nav_subclass
 
-    def click_on_aside_item(self, section):
-        aside_item = self.find_element_by_xpath(self.get_locator_with_replace_xpath(self.ASIDE_ITEM, "section", section))
+    def click_on_submenu_item(self, section):
+        aside_item = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.ASIDE_ITEM, "section", section))
         self.click_on_element(aside_item)
         wait = WebDriverWait(self.driver, 5)
         wait.until_not(EC.presence_of_element_located(self.LOADING_BAR))
         return aside_item
 
-    def verify_catalog_page(self):
+    def verify_catalog_page_by_header(self, header):
         catalog_header_whole = self.find_element_by_xpath(self.CATALOG_HEADER_FULL)
         catalog_super_price = self.find_element_by_xpath(self.CATALOG_HEADER_SUPERPRICE)
         catalog_header = catalog_header_whole.text.replace(catalog_super_price.text, '')
-        assert catalog_header == "Каталог"
+        assert catalog_header == header
         return catalog_header
