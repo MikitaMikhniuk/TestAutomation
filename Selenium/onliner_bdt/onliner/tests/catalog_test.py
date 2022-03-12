@@ -7,7 +7,7 @@ from framework.utils.navigation import navigate_to
 
 @pytest.fixture
 def test_data():
-    file = open("tests\\test_data.json")
+    file = open("onliner\\resources\\test_data.json")
     data = json.load(file)
     yield data
 
@@ -20,7 +20,7 @@ def test_onliner_tv_flow(setup, test_data):
     resolution = test_data["RESOLUTION"]
     landing_url = test_data["LANDING_URL"]
     
-    navigate_to(landing_url)
+    navigate_to(driver, landing_url)
 
     landing = MainPage(driver)
     landing.click_on_catalog_top_bar("Каталог")
@@ -39,4 +39,8 @@ def test_onliner_tv_flow(setup, test_data):
     results.set_min_size(min_size)
     results.set_max_size(max_size)
     results.wait_for_filter_results()
+
+    results.assert_headers(vendor)
+    results.assert_descriptions(resolution, min_size, max_size)
+    results.assert_prices(max_price)
     

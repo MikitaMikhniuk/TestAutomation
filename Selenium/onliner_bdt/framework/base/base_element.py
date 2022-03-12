@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+
 class BaseElement:
     """
     Base element class.
@@ -7,12 +9,12 @@ class BaseElement:
     def __init__(self, driver):
         self.driver = driver
 
-    def find_element(self, locator):
-        element = self.driver.find_element(locator)
+    def find_element_by_xpath(self, xpath):
+        element = self.driver.find_element(By.XPATH, xpath)
         return element
     
-    def find_elements(self, locator):
-        elements = self.driver.find_element(locator)
+    def find_elements_by_xpath(self, xpath):
+        elements = self.driver.find_elements(By.XPATH, xpath)
         return elements
     
     def click_on_element(self, element):

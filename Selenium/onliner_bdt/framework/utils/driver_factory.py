@@ -23,12 +23,14 @@ class DriverFactory:
         """
         config_file = open(CONFIG_PATH)
         factory_config = json.load(config_file)
-        default_download_path = set_up_download_folder(factory_config)
+        if factory_config["USE_DOWNLOADER"] is True:
+            default_download_path = set_up_download_folder(factory_config)
+        else:
+            default_download_path = "\\"
         if factory_config["BROWSER"] == "Chrome":
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
             options.add_argument("--safebrowsing-disable-download-protection")
-
             file_prefs = {"download.default_directory": default_download_path,
                           "download.prompt_for_download": False,
                           "safebrowsing.enabled": True}
@@ -40,7 +42,6 @@ class DriverFactory:
             return driver
         elif factory_config["BROWSER"] == "Firefox":
             options = FirefoxOptions()
-            # profile = webdriver.FirefoxProfile()
             options.set_preference("browser.download.folderList", 2)
             options.set_preference(
                 "browser.download.dir", default_download_path)

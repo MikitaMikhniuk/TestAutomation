@@ -43,11 +43,11 @@ class BasePage:
         current_lang = lang_element.get_attribute("lang")
         return current_lang
 
-    def get_locator_with_replace(self, input_element, replace_what, replace_to):
+    def get_locator_with_replace_xpath(self, input_xpath, replace_what, replace_to):
         """
         Method for getting a locator with a replaced str.
 
-        Input Element - a tuple with locator type and locator itself. e.g. (By.XPATH, "abc")
+        Input xpath - str
         
         Replace what (str) - a str to be replaced.
 
@@ -55,10 +55,8 @@ class BasePage:
 
         Returns an element locator (tuple).
         """
-        locator = (input_element[1]).replace(replace_what, replace_to)
-        element = (input_element[0], locator)
-        print(element)
-        return element
+        locator_xpath = input_xpath.replace(replace_what, replace_to)
+        return locator_xpath
 
     def verify_current_page_by_url(self, URL):
         """
