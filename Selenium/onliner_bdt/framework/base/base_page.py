@@ -5,20 +5,20 @@ class BasePage:
     """
     Base page class.
 
-    Contains basic methods available for all Steam pages.
+    Contains basic methods available for all pages.
     """
     def __init__(self, driver):
         self.driver = driver
 
-    HTML_HEAD_LOCATOR = '//html[@class=" responsive"]'
+    HTML_HEAD_LOCATOR = (By.XPATH, '//html[@class=" responsive"]')
 
-    def go_to(self, URL):
+    def navigate(self, url):
         """
         Simple method to navigae to any URL you want.
 
-        Input-> URL (str). e.g. https://store.steampowered.com/
+        Input-> URL (str).
         """
-        self.driver.get(URL)
+        self.driver.get(url)
 
     def get_current_page_title(self):
         """
@@ -39,17 +39,26 @@ class BasePage:
         Returns current page lang (str) based on HTML <head>.
         Example: "en".
         """
-        lang_element = self.driver.find_element(By.XPATH, self.HTML_HEAD_LOCATOR)
+        lang_element = self.driver.find_element(self.HTML_HEAD_LOCATOR)
         current_lang = lang_element.get_attribute("lang")
         return current_lang
 
-    def scroll_element_into_view(self, element):
+    def get_locator_with_replace(self, input_element, replace_what, replace_to):
         """
-        Scrolls down to the input Selenium element.
+        Method for getting a locator with a replaced str.
 
-        Input-> Element (selenium element).
+        Input Element - a tuple with locator type and locator itself. e.g. (By.XPATH, "abc")
+        
+        Replace what (str) - a str to be replaced.
+
+        Replace to (str) - a str to be inserted.
+
+        Returns an element locator (tuple).
         """
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        locator = (input_element[1]).replace(replace_what, replace_to)
+        element = (input_element[0], locator)
+        print(element)
+        return element
 
     def verify_current_page_by_url(self, URL):
         """
