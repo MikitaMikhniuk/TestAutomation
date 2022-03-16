@@ -113,4 +113,4 @@ class ResultPage(BasePage, BaseElement):
     def assert_prices(self, max_price):
         for item_price in self.find_item_prices():
             price = item_price.text.replace('\u00A0р.', '')
-            assert int(price) <= int(max_price) 
+            assert int(price) <= int(max_price)

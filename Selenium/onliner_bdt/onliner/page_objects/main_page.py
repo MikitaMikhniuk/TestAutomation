@@ -1,7 +1,5 @@
-from asyncio.windows_events import NULL
 from framework.base.base_page import BasePage
 from framework.base.base_element import BaseElement
-from selenium.webdriver.common.by import By
 
 
 class MainPage(BasePage, BaseElement):
@@ -25,4 +23,4 @@ class MainPage(BasePage, BaseElement):
 
     def verify_main_page(self):
         news = self.find_element_by_xpath(self.NEWS_CONTENT)
-        assert news != NULL
+        assert news != None

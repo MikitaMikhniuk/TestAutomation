@@ -20,7 +20,6 @@ class BaseElement:
     def click_on_element(self, element):
         element.click()
 
-
     def scroll_element_into_view(self, element):
         """
         Scrolls down to the input Selenium element.

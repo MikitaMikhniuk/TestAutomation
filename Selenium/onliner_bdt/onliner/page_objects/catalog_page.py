@@ -1,14 +1,16 @@
+from multiprocessing.connection import wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from framework.base.base_page import BasePage
 from framework.base.base_element import BaseElement
+from framework.utils.waiter import Waiter
 
 class CatalogPage(BasePage, BaseElement):
 
     def __init__(self, driver):
         super().__init__(driver)
-
+    
     NAV_CLASS = '//span[contains(@class,"catalog-navigation-classifier__item-title-wrapper") and translate(text(),"\u00A0"," ")="section"]'
     ASIDE_LIST = (By.XPATH,'//div[@class="catalog-navigation-list__aside-list"]')
     NAV_SUBCLASS = '//div[contains(@class,"catalog-navigation-list__aside-title") and translate(normalize-space(text()),"\u00A0"," ")="section"]'
