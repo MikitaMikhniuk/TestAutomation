@@ -1,6 +1,6 @@
-from page_objects.main_page import MainPage
-from page_objects.catalog_page import CatalogPage
-from page_objects.result_page import ResultPage
+from onliner.page_objects.main_page import MainPage
+from onliner.page_objects.catalog_page import CatalogPage
+from onliner.page_objects.result_page import ResultPage
 from framework.utils.browser import Browser
 
 
