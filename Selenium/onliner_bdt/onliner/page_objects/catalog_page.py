@@ -38,7 +38,6 @@ class CatalogPage(BasePage, BaseElement):
         aside_item = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.ASIDE_ITEM, "section", section))
         self.click_on_element(aside_item)
         wait = WebDriverWait(self.driver, 5)
-        wait.until_not(EC.presence_of_element_located(self.LOADING_BAR))
         return aside_item
 
     def verify_catalog_page_by_header(self, header):

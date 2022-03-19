@@ -92,7 +92,6 @@ class ResultPage(BasePage, BaseElement):
     def verify_result_page_by_header(self, header):
         result_page_header = self.find_element_by_xpath(self.RESULT_PAGE_TITLE)
         wait = WebDriverWait(self.driver, 5)    
-        wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
         assert result_page_header.text == header
 
     def wait_for_filter_results(self):
@@ -101,7 +100,7 @@ class ResultPage(BasePage, BaseElement):
 
     def assert_headers(self, vendor):
         for item_header in self.find_item_headers():
-            assert f"Телевизор {vendor}" in item_header.text
+            assert vendor in item_header.text
     
     def assert_descriptions(self, resolution, min_size, max_size):
         for item_description in self.find_item_descriptions():
