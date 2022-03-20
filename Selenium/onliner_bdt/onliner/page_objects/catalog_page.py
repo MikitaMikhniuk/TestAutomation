@@ -1,10 +1,8 @@
-from multiprocessing.connection import wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from framework.base.base_page import BasePage
 from framework.base.base_element import BaseElement
-from framework.utils.waiter import Waiter
 
 class CatalogPage(BasePage, BaseElement):
 
@@ -37,7 +35,6 @@ class CatalogPage(BasePage, BaseElement):
     def click_on_submenu_item(self, section):
         aside_item = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.ASIDE_ITEM, "section", section))
         self.click_on_element(aside_item)
-        wait = WebDriverWait(self.driver, 5)
         return aside_item
 
     def verify_catalog_page_by_header(self, header):

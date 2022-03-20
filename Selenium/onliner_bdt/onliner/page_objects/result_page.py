@@ -1,8 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import Select
 from framework.base.base_page import BasePage
 from framework.base.base_element import BaseElement
 
@@ -28,28 +26,26 @@ class ResultPage(BasePage, BaseElement):
     def click_on_filter_checkbox(self, keyword):
         filter_checkbox = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.FILTER_CHECKBOX, "keyword", keyword))
         self.scroll_element_into_view(filter_checkbox)
-        actions = ActionChains(self.driver)
-        actions.move_to_element(filter_checkbox).click().perform()
+        self.move_to_element(filter_checkbox)
+        self.click_on_element(filter_checkbox)
         wait = WebDriverWait(self.driver, 5)
         wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
         return filter_checkbox
     
     def set_min_price(self, min_price):
         min_price_input = self.find_element_by_xpath(self.MIN_PRICE_INPUT)
-        actions = ActionChains(self.driver)
-        actions.move_to_element(min_price_input) # TODO
+        self.move_to_element(min_price_input)
         self.click_on_element(min_price_input)
-        min_price_input.send_keys(min_price) # TODO
+        self.send_keys(min_price_input, min_price)
         wait = WebDriverWait(self.driver, 5)
         wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
         return min_price_input
 
     def set_max_price(self, max_price):
         max_price_input = self.find_element_by_xpath(self.MAX_PRICE_INPUT)
-        actions = ActionChains(self.driver)
-        actions.move_to_element(max_price_input)
+        self.move_to_element(max_price_input)
         self.click_on_element(max_price_input)
-        max_price_input.send_keys(max_price)
+        self.send_keys(max_price_input, max_price)
         wait = WebDriverWait(self.driver, 5)
         wait.until(EC.presence_of_element_located(self.SCHEMA_PROD))
         return max_price_input
@@ -60,14 +56,14 @@ class ResultPage(BasePage, BaseElement):
         wait = WebDriverWait(self.driver, 5)
         element = (By.XPATH, self.get_locator_with_replaced_xpath(self.MIN_SIZE_VALUE_OPTION, "VALUE", value))
         wait.until(EC.visibility_of_element_located(element))
-        Select(min_size_input).select_by_value(value)
+        self.select_by_dropdown_value(min_size_input, value)
         wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
         return min_size_input
 
     def set_max_size(self, value):
         max_size_input = self.find_element_by_xpath(self.MAX_SIZE_INPUT)
         self.click_on_element(max_size_input)
-        Select(max_size_input).select_by_value(value)
+        self.select_by_dropdown_value(max_size_input, value)
         wait = WebDriverWait(self.driver, 5)
         element = (By.XPATH, self.get_locator_with_replaced_xpath(self.MAX_SIZE_VALUE_OPTION, "VALUE", value))
         wait.until(EC.visibility_of_element_located(element))
@@ -90,8 +86,7 @@ class ResultPage(BasePage, BaseElement):
         return item_prices
 
     def verify_result_page_by_header(self, header):
-        result_page_header = self.find_element_by_xpath(self.RESULT_PAGE_TITLE)
-        wait = WebDriverWait(self.driver, 5)    
+        result_page_header = self.find_element_by_xpath(self.RESULT_PAGE_TITLE)    
         assert result_page_header.text == header
 
     def wait_for_filter_results(self):

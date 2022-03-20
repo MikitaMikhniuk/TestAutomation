@@ -12,12 +12,14 @@ class MainPage(BasePage, BaseElement):
     NEWS_CONTENT = '//div[@class="b-main-page-grid-4 b-main-page-news-2"]'
 
     def click_on_catalog_top_bar(self, section):
-        catalog_top_bar = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.CATALOG_TOP_BAR, "section", section))
+        catalog_top_bar = self.find_element_by_xpath(
+            self.get_locator_with_replaced_xpath(self.CATALOG_TOP_BAR, "section", section))
         self.click_on_element(catalog_top_bar)
         return catalog_top_bar
 
     def click_on_catalog_page_section(self, section):
-        catalog_page_section = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.CATALOG_PAGE_SECTION, "section", section))
+        catalog_page_section = self.find_element_by_xpath(
+            self.get_locator_with_replaced_xpath(self.CATALOG_PAGE_SECTION, "section", section))
         self.click_on_element(catalog_page_section)
         return catalog_page_section
 
