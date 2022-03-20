@@ -1,8 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 class BaseElement:
     """
@@ -19,6 +17,14 @@ class BaseElement:
 
     def find_elements_by_xpath(self, xpath):
         elements = self.driver.find_elements(By.XPATH, xpath)
+        return elements
+        
+    def find_element_by_id(self, id):
+        element = self.driver.find_element(By.ID, id)
+        return element
+
+    def find_elements_by_id(self, id):
+        elements = self.driver.find_elements(By.ID, id)
         return elements
     
     def click_on_element(self, element):
