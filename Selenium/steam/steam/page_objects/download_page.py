@@ -20,7 +20,6 @@ class DownloadPage(BaseSteamPage):
         Method is used to click on "Download Steam" button.
         And wait for download finish.
         """
-        install_button = self.driver.find_element(
-            By.XPATH, self.INSTALL_BUTTON_XPATH)
-        install_button.click()
+        install_button = self.find_element_by_xpath(self.INSTALL_BUTTON_XPATH)
+        self.click_on_element(install_button)
         wait_for_download_finish("SteamSetup.exe")

@@ -72,14 +72,10 @@ class BaseSteamPage(BasePage, BaseElement):
 
         Input -> Lang (str). Example: "russian", "english"
         """
-        # lang_drop = self.driver.find_element(By.ID, self.LANG_DROPDOWN_ID)
         lang_drop = self.find_element_by_id(self.LANG_DROPDOWN_ID)
-        # lang_drop.click()
         self.click_on_element(lang_drop)
         lang_locator = self.get_lang_locator(lang)
-        # lang_btn = self.driver.find_element(By.XPATH, lang_locator)
         lang_btn = self.find_element_by_xpath(lang_locator)
-        # lang_btn.click()
         self.click_on_element(lang_btn)
 
     
@@ -95,9 +91,4 @@ class BaseSteamPage(BasePage, BaseElement):
             time.sleep(5)
         else:
             pass
-    
-    def get_factory_config(self):
-        config_file = open(CONFIG_PATH)
-        factory_config = json.load(config_file)
-        BaseSteamPage.DEFAULT_WAIT_TIME = factory_config["DEFAULT_WAIT_TIME"]
-        return factory_config
+

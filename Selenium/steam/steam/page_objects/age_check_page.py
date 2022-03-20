@@ -1,6 +1,4 @@
 from steam.page_objects.base_steam_page import BaseSteamPage
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 from framework.utils.browser import Browser
 
 
@@ -31,18 +29,15 @@ class AgeVerificationPage(BaseSteamPage):
 
         Input (opt)-> Year (str). e.g. "1995".
         """
-        day_selector = self.driver.find_element(
-            By.ID, self.AGE_DAY_SELECTOR_ID)
-        day_selector.click()
-        Select(day_selector).select_by_value(day)
-        month_selector = self.driver.find_element(
-            By.ID, self.AGE_MONTH_SELECTOR_ID)
-        month_selector.click()
-        Select(month_selector).select_by_value(month)
-        year_selector = self.driver.find_element(
-            By.ID, self.AGE_YEAR_SELECTOR_ID)
-        year_selector.click()
-        Select(year_selector).select_by_value(year)
+        day_selector = self.find_elements_by_id(self.AGE_DAY_SELECTOR_ID)
+        self.click_on_element(day_selector)
+        self.select_by_dropdown_value(day_selector, day)
+        month_selector = self.find_element_by_id(self.AGE_MONTH_SELECTOR_ID)
+        self.click_on_element(month_selector)
+        self.select_by_dropdown_value(month_selector, month)
+        year_selector = self.find_element_by_id(self.AGE_YEAR_SELECTOR_ID)
+        self.click_on_element(year_selector)
+        self.select_by_dropdown_value(year_selector, year)
 
     def wait_for_age_verification_page(self, app_id):
         """
@@ -58,9 +53,8 @@ class AgeVerificationPage(BaseSteamPage):
             print("Age check!")
             assert app_id == self.get_current_appid_from_url()
             self.set_user_dob()
-            view_page_btn = self.driver.find_element(
-                By.ID, self.VIEW_PAGE_BTN_ID)
-            view_page_btn.click()
+            view_page_btn = self.find_element_by_id(self.VIEW_PAGE_BTN_ID)
+            self.click_on_element(view_page_btn)
         else:
             print("No age check!")
             pass

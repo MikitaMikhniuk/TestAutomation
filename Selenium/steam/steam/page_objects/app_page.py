@@ -2,7 +2,6 @@ from steam.page_objects.base_steam_page import BaseSteamPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from framework.utils.browser import Browser
 
 
 class AppPage(BaseSteamPage):
@@ -32,5 +31,5 @@ class AppPage(BaseSteamPage):
         """
         Help method is used to click on Global header download button.
         """
-        btn = self.driver.find_element(By.XPATH, self.INSTALL_BTN_XPATH)
-        btn.click()
+        btn = self.find_element_by_xpath(self.INSTALL_BTN_XPATH)
+        self.click_on_element(btn)
