@@ -1,10 +1,10 @@
 import os
 import time
+from framework.utils import config_reader
 
-CONFIG_PATH = "framework\\resources\\factory_config.json"
 
 
-def set_up_download_folder(factory_config):
+def set_up_download_folder():
     """
     Method is used to create a folder for the current test run.
 
@@ -12,6 +12,7 @@ def set_up_download_folder(factory_config):
 
     Returns (str) -> download path
     """
+    factory_config = config_reader.get_factory_config()
     os.chdir(factory_config["DEFAULT_DOWNLOAD_PATH"])
     folder_name = factory_config["BROWSER"] + "_" + 'test_run_' + time.strftime("%d.%m.%Y^%H_%M_%S")
     os.mkdir(folder_name)
@@ -22,12 +23,14 @@ def set_up_download_folder(factory_config):
     return default_download_path
 
 
-def wait_for_download_finish(file_name, wait_sec= 10):
+def wait_for_download_finish(file_name):
     """
     Method is used to wait for a specific file to be found in current folder.
 
     Input -> Full file name (str). e.g. "SteamSetup.exe"
     """
+    factory_config = config_reader.get_factory_config()
+    wait_sec = factory_config["DOWNLOAD_WAIT"]
     i = 0
     while i < wait_sec:
         if file_name in os.getcwd():

@@ -1,63 +1,49 @@
-from selenium.webdriver.common.by import By
+from framework.utils.browser import Browser
+from framework.base.base_element import BaseElement
 
 
 class BasePage:
     """
     Base page class.
 
-    Contains basic methods available for all Steam pages.
+    Contains basic methods available for all pages.
     """
     def __init__(self, driver):
         self.driver = driver
 
-    HTML_HEAD_LOCATOR = '//html[@class=" responsive"]'
-
-    def go_to(self, URL):
-        """
-        Simple method to navigae to any URL you want.
-
-        Input-> URL (str). e.g. https://store.steampowered.com/
-        """
-        self.driver.get(URL)
-
-    def get_current_page_title(self):
-        """
-        Returns current page title (str).
-        """
-        current_page_title = self.driver.title()
-        return current_page_title
-
-    def get_current_url(self):
-        """
-        Returns current page URL (str).
-        """
-        current_url = self.driver.current_url
-        return current_url
+    HTML_HEAD_LOCATOR = 'responsive-layout'
 
     def get_current_language(self):
         """
         Returns current page lang (str) based on HTML <head>.
         Example: "en".
         """
-        lang_element = self.driver.find_element(By.XPATH, self.HTML_HEAD_LOCATOR)
+        lang_element = BaseElement.find_element_by_xpath(self.HTML_HEAD_LOCATOR)
         current_lang = lang_element.get_attribute("lang")
         return current_lang
 
-    def scroll_element_into_view(self, element):
+    def get_locator_with_replaced_xpath(self, input_xpath, replace_what, replace_to):
         """
-        Scrolls down to the input Selenium element.
+        Method for getting a locator with a replaced str.
 
-        Input-> Element (selenium element).
+        Input xpath - str
+        
+        Replace what (str) - a str to be replaced.
+
+        Replace to (str) - a str to be inserted.
+
+        Returns an element xpath (str).
         """
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        locator_xpath = input_xpath.replace(replace_what, replace_to)
+        return locator_xpath
 
-    def verify_current_page_by_url(self, URL):
+    def verify_current_page_by_url(self, url):
         """
         Assertion methond to compare current page URL with the given one (input).
 
         Input-> URL (str).
         """
-        assert self.get_current_url() == URL
+        assert Browser.get_current_url() == url
 
     def verify_current_page_by_title(self, title):
         """
@@ -65,4 +51,4 @@ class BasePage:
 
         Input-> title (str).
         """
-        assert self.get_current_page_title() == title
+        assert Browser.get_current_page_title() == title
