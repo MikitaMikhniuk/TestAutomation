@@ -24,14 +24,16 @@ class ResultPage(BasePage, BaseElement):
     ITEM_PRICES = '//span[@data-bind="html: $root.format.minPrice($data.prices, ''BYN'')"]'
     RESULT_PAGE_TITLE = '//h1[contains(@class,"schema-header__title")]'
 
+    def wait_for_filter_results(self):
+        wait_until_not = waiter.UntilNot(self.driver)
+        wait_until_not.presence_of_element_located(self.LOADING_ANIM)
+
     def click_on_filter_checkbox(self, keyword):
         filter_checkbox = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.FILTER_CHECKBOX, "keyword", keyword))
         self.scroll_element_into_view(filter_checkbox)
         self.move_to_element(filter_checkbox)
         self.click_on_element(filter_checkbox)
-        # wait = WebDriverWait(self.driver, 5)
-        # wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
-        waiter.wait_for_presence_of_element_located(self.driver, self.LOADING_ANIM)
+        self.wait_for_filter_results()
         return filter_checkbox
     
     def set_min_price(self, min_price):
@@ -39,8 +41,7 @@ class ResultPage(BasePage, BaseElement):
         self.move_to_element(min_price_input)
         self.click_on_element(min_price_input)
         self.send_keys(min_price_input, min_price)
-        wait = WebDriverWait(self.driver, 5)
-        wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
+        self.wait_for_filter_results()
         return min_price_input
 
     def set_max_price(self, max_price):
@@ -48,34 +49,33 @@ class ResultPage(BasePage, BaseElement):
         self.move_to_element(max_price_input)
         self.click_on_element(max_price_input)
         self.send_keys(max_price_input, max_price)
-        wait = WebDriverWait(self.driver, 5)
-        wait.until(EC.presence_of_element_located(self.SCHEMA_PROD))
+        wait_until = waiter.Until(self.driver)
+        wait_until.presence_of_element_located(self.SCHEMA_PROD)
         return max_price_input
     
     def set_min_size(self, value):
         min_size_input = self.find_element_by_xpath(self.MIN_SIZE_INPUT)
         self.click_on_element(min_size_input)
-        wait = WebDriverWait(self.driver, 5)
         element = (By.XPATH, self.get_locator_with_replaced_xpath(self.MIN_SIZE_VALUE_OPTION, "VALUE", value))
-        wait.until(EC.visibility_of_element_located(element))
+        wait_until = waiter.Until(self.driver)
+        wait_until.visibility_of_element_located(element)
         self.select_by_dropdown_value(min_size_input, value)
-        wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
+        self.wait_for_filter_results()
         return min_size_input
 
     def set_max_size(self, value):
         max_size_input = self.find_element_by_xpath(self.MAX_SIZE_INPUT)
         self.click_on_element(max_size_input)
         self.select_by_dropdown_value(max_size_input, value)
-        wait = WebDriverWait(self.driver, 5)
         element = (By.XPATH, self.get_locator_with_replaced_xpath(self.MAX_SIZE_VALUE_OPTION, "VALUE", value))
-        wait.until(EC.visibility_of_element_located(element))
+        wait_until = waiter.Until(self.driver)
+        wait_until.visibility_of_element_located(element)
         self.click_on_element(max_size_input)
-        wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
+        self.wait_for_filter_results()
         return max_size_input
 
     def find_item_headers(self):
-        wait = WebDriverWait(self.driver, 5)
-        wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
+        self.wait_for_filter_results()
         item_headers = self.find_elements_by_xpath(self.ITEM_HEADERS)
         return item_headers
 
@@ -91,9 +91,6 @@ class ResultPage(BasePage, BaseElement):
         result_page_header = self.find_element_by_xpath(self.RESULT_PAGE_TITLE)    
         assert result_page_header.text == header
 
-    def wait_for_filter_results(self):
-        wait = WebDriverWait(self.driver, 5)
-        wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
 
     def assert_headers(self, vendor):
         for item_header in self.find_item_headers():

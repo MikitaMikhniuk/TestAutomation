@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from framework.base.base_page import BasePage
 from framework.base.base_element import BaseElement
+from framework.utils.waiter import Until
 
 class CatalogPage(BasePage, BaseElement):
 
@@ -21,15 +22,15 @@ class CatalogPage(BasePage, BaseElement):
     def navigate_to_menu(self, section):
         nav_class = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.NAV_CLASS, "section", section))
         self.click_on_element(nav_class)
-        wait = WebDriverWait(self.driver, 5)
-        wait.until(EC.visibility_of_any_elements_located(self.ASIDE_LIST))
+        wait_until = Until(self.driver)
+        wait_until.visibility_of_any_elements_located(self.ASIDE_LIST)
         return nav_class
 
     def navigate_to_submenu(self, section):
         nav_subclass = self.find_element_by_xpath(self.get_locator_with_replaced_xpath(self.NAV_SUBCLASS, "section", section))
         self.click_on_element(nav_subclass)
-        wait = WebDriverWait(self.driver, 5)
-        wait.until(EC.visibility_of_any_elements_located(self.NAV_LIST))
+        wait_until = Until(self.driver)
+        wait_until.visibility_of_any_elements_located(self.NAV_LIST)
         return nav_subclass
 
     def click_on_submenu_item(self, section):
