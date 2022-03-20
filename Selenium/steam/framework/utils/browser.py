@@ -35,6 +35,9 @@ class Browser:
         current_url = self.driver.current_url
         return current_url
 
+    def switch_to_window(self, window_handle):
+        self.driver.switch_to.window(self.driver.window_handles[window_handle])
+
     @staticmethod
     def browser_setup():
         factory_config = config_reader.get_factory_config()
