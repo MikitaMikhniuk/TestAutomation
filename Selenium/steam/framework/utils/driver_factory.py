@@ -1,5 +1,4 @@
 from selenium import webdriver
-import json
 from framework.utils.browser import Browser
 from framework.utils import config_reader
 
