@@ -11,14 +11,15 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    HTML_HEAD_LOCATOR = 'responsive-layout'
+    HTML_HEAD_LOCATOR = '//html[@class=" responsive"]'
 
     def get_current_language(self):
         """
         Returns current page lang (str) based on HTML <head>.
         Example: "en".
         """
-        lang_element = BaseElement.find_element_by_xpath(self.HTML_HEAD_LOCATOR)
+        base = BaseElement(self.driver)
+        lang_element = base.find_element_by_xpath(self.HTML_HEAD_LOCATOR)
         current_lang = lang_element.get_attribute("lang")
         return current_lang
 
@@ -43,7 +44,8 @@ class BasePage:
 
         Input-> URL (str).
         """
-        assert Browser.get_current_url() == url
+        browser = Browser(self.driver)
+        assert browser.get_current_url() == url
 
     def verify_current_page_by_title(self, title):
         """
@@ -51,4 +53,5 @@ class BasePage:
 
         Input-> title (str).
         """
-        assert Browser.get_current_page_title() == title
+        browser = Browser(self.driver)
+        assert browser.get_current_page_title() == title
