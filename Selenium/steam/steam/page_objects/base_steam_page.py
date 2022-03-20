@@ -1,3 +1,4 @@
+from framework.base.base_element import BaseElement
 from framework.base.base_page import BasePage
 from selenium.webdriver.common.by import By
 import time
@@ -5,7 +6,7 @@ import json
 
 CONFIG_PATH = "framework\\resources\\factory_config.json"
 
-class BaseSteamPage(BasePage):
+class BaseSteamPage(BasePage, BaseElement):
     """
     Base Steam page class.
 
@@ -30,7 +31,6 @@ class BaseSteamPage(BasePage):
         Returns -> app id (str).
         """
         url = self.get_current_url()
-        print(url)
         url_splitted = url.split("/")
         app_index = url_splitted.index("app")
         app_id = url_splitted[app_index+1]
@@ -70,11 +70,16 @@ class BaseSteamPage(BasePage):
 
         Input -> Lang (str). Example: "russian", "english"
         """
-        lang_drop = self.driver.find_element(By.ID, self.LANG_DROPDOWN_ID)
-        lang_drop.click()
+        # lang_drop = self.driver.find_element(By.ID, self.LANG_DROPDOWN_ID)
+        lang_drop = self.find_element_by_id(self.LANG_DROPDOWN_ID)
+        # lang_drop.click()
+        self.click_on_element(lang_drop)
         lang_locator = self.get_lang_locator(lang)
-        lang_btn = self.driver.find_element(By.XPATH, lang_locator)
-        lang_btn.click()
+        # lang_btn = self.driver.find_element(By.XPATH, lang_locator)
+        lang_btn = self.find_element_by_xpath(lang_locator)
+        # lang_btn.click()
+        self.click_on_element(lang_btn)
+
     
     def check_for_current_lang(self, desired_lang_code, desired_lang_full):
         """

@@ -1,4 +1,4 @@
-from page_objects.pages.base_steam_page import BaseSteamPage
+from steam.page_objects.base_steam_page import BaseSteamPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 

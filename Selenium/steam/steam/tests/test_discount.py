@@ -1,15 +1,16 @@
 from framework.utils.lang_utils import get_label
-from framework.utils.navigation import navigate_to
-from page_objects.pages.main_page import MainPage
-from page_objects.pages.category_page import CategoryPage
-from page_objects.pages.download_page import DownloadPage
-from page_objects.pages.app_page import AppPage
-from page_objects.pages.age_check_page import AgeVerificationPage
+from framework.utils.browser import Browser
+from steam.page_objects.main_page import MainPage
+from steam.page_objects.category_page import CategoryPage
+from steam.page_objects.download_page import DownloadPage
+from steam.page_objects.app_page import AppPage
+from steam.page_objects.age_check_page import AgeVerificationPage
 
 
 def test_max_discount(setup, get_test_data):
     driver = setup
-    navigate_to(driver, get_test_data["START_URL"])
+    browser = Browser(driver)
+    browser.navigate(get_test_data["START_URL"])
 
     main_page = MainPage(driver)
     main_page.check_for_current_lang(

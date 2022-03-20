@@ -1,6 +1,6 @@
 import random
 from framework.utils.lang_utils import get_label
-from page_objects.pages.base_steam_page import BaseSteamPage
+from steam.page_objects.base_steam_page import BaseSteamPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
