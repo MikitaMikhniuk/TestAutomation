@@ -3,5 +3,6 @@
     "HEADLESS_MODE": "False",
     "USE_DOWNLOADER": "False",
     "DEFAULT_DOWNLOAD_PATH": "resources\\downloads",
-    "DEFAULT_WAIT_TIME": "10"
+    "DEFAULT_WAIT_TIME": "10",
+    "DOWNLOAD_WAIT": "10"
 }
