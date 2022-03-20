@@ -3,6 +3,7 @@ from framework.base.base_page import BasePage
 from selenium.webdriver.common.by import By
 import time
 import json
+from framework.utils.browser import Browser
 
 CONFIG_PATH = "framework\\resources\\factory_config.json"
 
@@ -30,7 +31,8 @@ class BaseSteamPage(BasePage, BaseElement):
 
         Returns -> app id (str).
         """
-        url = self.get_current_url()
+        browser = Browser(self.driver)
+        url = browser.get_current_url()
         url_splitted = url.split("/")
         app_index = url_splitted.index("app")
         app_id = url_splitted[app_index+1]

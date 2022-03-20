@@ -1,6 +1,7 @@
 from steam.page_objects.base_steam_page import BaseSteamPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
+from framework.utils.browser import Browser
 
 
 class AgeVerificationPage(BaseSteamPage):
@@ -50,7 +51,8 @@ class AgeVerificationPage(BaseSteamPage):
 
         Input -> app id (str).
         """
-        url = self.get_current_url()
+        browser = Browser(self.driver)
+        url = browser.get_current_url()
         print(url)
         if self.AGE_CHECK_KEYWORD_ID in url:
             print("Age check!")
