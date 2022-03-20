@@ -12,7 +12,6 @@ class BaseElement:
     """
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(self.driver, 5)
 
     def find_element_by_xpath(self, xpath):
         element = self.driver.find_element(By.XPATH, xpath)
@@ -55,12 +54,3 @@ class BaseElement:
 
     def select_by_dropdown_value(self, element, value):
         Select(element).select_by_value(value)
-
-    def wait_for_visibility_of_any_elements_located(self, elements):
-        pass
-
-    def wait_for_presence_of_element_located(self, element):
-        pass
-
-    def wait_for_visibility_of_element_located(self, element):
-        pass
