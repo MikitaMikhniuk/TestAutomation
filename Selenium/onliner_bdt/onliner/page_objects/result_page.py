@@ -3,6 +3,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from framework.base.base_page import BasePage
 from framework.base.base_element import BaseElement
+from framework.utils import waiter
 
 class ResultPage(BasePage, BaseElement):
     
@@ -28,8 +29,9 @@ class ResultPage(BasePage, BaseElement):
         self.scroll_element_into_view(filter_checkbox)
         self.move_to_element(filter_checkbox)
         self.click_on_element(filter_checkbox)
-        wait = WebDriverWait(self.driver, 5)
-        wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
+        # wait = WebDriverWait(self.driver, 5)
+        # wait.until_not(EC.presence_of_element_located(self.LOADING_ANIM))
+        waiter.wait_for_presence_of_element_located(self.driver, self.LOADING_ANIM)
         return filter_checkbox
     
     def set_min_price(self, min_price):

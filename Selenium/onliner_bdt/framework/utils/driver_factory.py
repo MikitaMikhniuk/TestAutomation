@@ -1,8 +1,8 @@
 from selenium import webdriver
 import json
 from framework.utils.browser import Browser
+from framework.utils import config_reader
 
-CONFIG_PATH = "framework\\resources\\factory_config.json"
 
 class DriverFactory:
     """
@@ -14,8 +14,7 @@ class DriverFactory:
         """
         Driver set up.
         """
-        config_file = open(CONFIG_PATH)
-        factory_config = json.load(config_file)
+        factory_config = config_reader.get_factory_config()
         s, options = Browser.browser_setup()
         if factory_config["BROWSER"] == "Chrome":
             driver = webdriver.Chrome(service=s, options=options)

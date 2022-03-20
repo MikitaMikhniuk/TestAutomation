@@ -1,14 +1,12 @@
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium import webdriver
-import json
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.firefox.service import Service as FirefoxSerive
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from framework.utils.downloader import set_up_download_folder
+from framework.utils import config_reader
 
-
-CONFIG_PATH = "framework\\resources\\factory_config.json"
 
 class Browser:
 
@@ -39,8 +37,7 @@ class Browser:
 
     @staticmethod
     def browser_setup():
-        config_file = open(CONFIG_PATH)
-        factory_config = json.load(config_file)
+        factory_config = config_reader.get_factory_config()
         if factory_config["USE_DOWNLOADER"] is True:
             default_download_path = set_up_download_folder(factory_config)
         else:
