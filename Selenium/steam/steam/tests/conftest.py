@@ -4,7 +4,7 @@ import json
 from framework.utils.driver_factory import DriverFactory
 from framework.utils.browser import Browser
 
-CONFIG_PATH = "steam\\resources\\test_data.json"
+CONFIG_PATH = "test_data.json"
 
 @pytest.fixture(scope="session")
 def setup():
@@ -15,9 +15,8 @@ def setup():
     
 @pytest.fixture(scope="session")
 def get_test_data():
-    print(os.getcwd())
-    # os.chdir("../..")
-    # print(os.getcwd())
+    os.chdir("../..")
     test_data_file = open(CONFIG_PATH)
     test_data = json.load(test_data_file)
+    os.chdir("../..")
     return test_data

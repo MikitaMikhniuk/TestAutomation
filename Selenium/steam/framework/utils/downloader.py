@@ -29,8 +29,9 @@ def wait_for_download_finish(file_name):
 
     Input -> Full file name (str). e.g. "SteamSetup.exe"
     """
+    print(os.getcwd())
     factory_config = config_reader.get_factory_config()
-    wait_sec = factory_config["DOWNLOAD_WAIT"]
+    wait_sec = int(factory_config["DOWNLOAD_WAIT"])
     i = 0
     while i < wait_sec:
         if file_name in os.getcwd():

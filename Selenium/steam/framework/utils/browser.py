@@ -38,10 +38,10 @@ class Browser:
     @staticmethod
     def browser_setup():
         factory_config = config_reader.get_factory_config()
-        if factory_config["USE_DOWNLOADER"] is True:
-            default_download_path = set_up_download_folder(factory_config)
+        if factory_config["USE_DOWNLOADER"] == "True":
+            default_download_path = set_up_download_folder()
         else:
-            default_download_path = "\\"
+            default_download_path = "weffe"
         if factory_config["BROWSER"] == "Chrome":
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
@@ -50,7 +50,7 @@ class Browser:
                         "download.prompt_for_download": False,
                         "safebrowsing.enabled": True}
             options.add_experimental_option("prefs", file_prefs)
-            if factory_config["HEADLESS_MODE"] is True:
+            if factory_config["HEADLESS_MODE"] == "True":
                 options.add_argument("--headless")
             s = ChromeService(ChromeDriverManager().install())
         elif factory_config["BROWSER"] == "Firefox":
@@ -65,7 +65,7 @@ class Browser:
                 "browser.helperApps.neverAsk.saveToDisk", "application/octet-stream")
             options.set_preference(
                 "browser.download.manager.showWhenStarting", False)
-            if factory_config["HEADLESS_MODE"] is True:
+            if factory_config["HEADLESS_MODE"] == "True":
                 options.headless = True
             s = FirefoxSerive(GeckoDriverManager().install())
         return s, options
