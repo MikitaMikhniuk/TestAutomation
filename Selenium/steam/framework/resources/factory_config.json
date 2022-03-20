@@ -1,8 +1,8 @@
 {
     "BROWSER" : "Chrome",
     "HEADLESS_MODE": "False",
-    "USE_DOWNLOADER": "False",
-    "DEFAULT_DOWNLOAD_PATH": "resources\\downloads",
+    "USE_DOWNLOADER": "True",
+    "DEFAULT_DOWNLOAD_PATH": "steam\\resources\\downloads",
     "DEFAULT_WAIT_TIME": "10",
     "DOWNLOAD_WAIT": "10"
 }
