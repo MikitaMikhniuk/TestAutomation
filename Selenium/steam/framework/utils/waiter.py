@@ -16,14 +16,22 @@ class Until:
         self.wait = WebDriverWait(self.driver, self.timeout)
     
 
-    def visibility_of_any_elements_located(self, element):
-        self.wait.until(EC.visibility_of_any_elements_located(element))
+    def visibility_of_any_elements_located(self, elements):
+        self.wait.until(EC.visibility_of_any_elements_located(elements))
+        return elements
 
     def presence_of_element_located(self, element):
         self.wait.until(EC.presence_of_element_located(element))
+        return element
 
-    def visibility_of_element_located(self, element):
-        self.wait.until(EC.visibility_of_element_located(element))
+    def visibility_of_element_located(self, elements):
+        self.wait.until(EC.visibility_of_element_located(elements))
+        return elements
+
+    def presence_of_all_elements_located(self, elements):
+        self.wait.until(EC.presence_of_all_elements_located((elements)))
+        return elements
+
 
 
 class UntilNot(Until):
@@ -33,3 +41,8 @@ class UntilNot(Until):
     
     def presence_of_element_located(self, element):
         self.wait.until_not(EC.presence_of_element_located(element))
+        return element
+    
+    def visibility_of_element_located(self, element):
+        self.wait.until_not(EC.visibility_of_element_located(element))
+        return element
