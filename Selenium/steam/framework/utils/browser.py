@@ -38,6 +38,9 @@ class Browser:
     def switch_to_window(self, window_handle):
         self.driver.switch_to.window(self.driver.window_handles[window_handle])
 
+    def page_reload(self):
+        self.driver.execute_script("window.location.reload()")
+
     @staticmethod
     def browser_setup():
         factory_config = config_reader.get_factory_config()
