@@ -30,7 +30,7 @@ def test_max_discount(setup, get_test_data):
 
     app_page = AppPage(driver)
     app_page.verify_curent_app_page(app_id)
-    app_page.go_to_download_page()
+    app_page.navigate_to_download_page()
 
     download_page = DownloadPage(driver)
     download_page.download_installer()

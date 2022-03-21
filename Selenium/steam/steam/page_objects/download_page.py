@@ -1,6 +1,5 @@
 from framework.utils.downloader import wait_for_download_finish
 from steam.page_objects.base_steam_page import BaseSteamPage
-from selenium.webdriver.common.by import By
 
 
 class DownloadPage(BaseSteamPage):

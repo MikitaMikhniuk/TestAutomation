@@ -1,9 +1,8 @@
 import random
 from framework.utils.browser import Browser
+from framework.utils.waiter import Until
 from steam.page_objects.base_steam_page import BaseSteamPage
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
 
 
 class CategoryPage(BaseSteamPage):
@@ -29,18 +28,22 @@ class CategoryPage(BaseSteamPage):
 
         Input-> Genre (str). e.g. "Action".
         """
-        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, self.PAGEHEADER_LOCATOR)))
+        # WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, self.PAGEHEADER_LOCATOR)))
+        wait_until = Until(self.driver)
+        wait_until.visibility_of_element_located((By.XPATH, self.PAGEHEADER_LOCATOR))
         category_header = self.find_element_by_xpath(self.PAGEHEADER_LOCATOR)
         category_header_text = (category_header.text).strip()
         assert category_header_text == genre
         return category_header_text
 
-
     def get_max_discount_recommended_special_item(self):
         tab = self.find_element_by_xpath(self.RECOMMENDED_SPECIALS_XPATH)
         self.scroll_element_into_view(tab)
-        app_id_elements = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, self.APPID_LOCATOR)))
-        discount_elements = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((By.XPATH, self.DISCOUNTED_PERCENTAGES_LOCATOR)))
+        wait_until = Until(self.driver)
+        wait_until.presence_of_all_elements_located((By.XPATH, self.DISCOUNTED_PERCENTAGES_LOCATOR))
+        wait_until.presence_of_all_elements_located((By.XPATH, self.APPID_LOCATOR))
+        app_id_elements = self.find_elements_by_xpath(self.APPID_LOCATOR)
+        discount_elements = self.find_elements_by_xpath(self.DISCOUNTED_PERCENTAGES_LOCATOR)
         app_ids = []
         discounts = []
         for id_element in app_id_elements:
@@ -58,7 +61,7 @@ class CategoryPage(BaseSteamPage):
         else:
             game_id = max_discount_ids[0]
             game_item_locator = self.GAME_ITEM_LOCATOR.replace("GAME_ID", game_id)
-            element = self.driver.find_element(By.XPATH, game_item_locator)
+            element = self.find_element_by_xpath(game_item_locator)
         return element, game_id
 
     def click_on_max_discount_game(self):

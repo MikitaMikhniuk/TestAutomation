@@ -1,8 +1,6 @@
 from framework.base.base_element import BaseElement
 from framework.base.base_page import BasePage
 from selenium.webdriver.common.by import By
-import time
-import json
 from framework.utils.browser import Browser
 
 CONFIG_PATH = "framework\\resources\\factory_config.json"
@@ -24,7 +22,9 @@ class BaseSteamPage(BasePage, BaseElement):
     APP_BASE_URL = "https://store.steampowered.com/app/"
     BASE_STEAM_URL = "https://store.steampowered.com/"
     LANG_DROPDOWN_ID = "language_pulldown"
- 
+    MAIN_CONTENT_XPATH = (By.XPATH, '//div[@class="responsive_page_frame with_header"]')
+    INSTALL_BTN_XPATH = '//a[@class="header_installsteam_btn_content"]'
+
     def get_current_appid_from_url(self):
         """
         Methond is used to get app id of the current app page URL.
@@ -78,7 +78,6 @@ class BaseSteamPage(BasePage, BaseElement):
         lang_btn = self.find_element_by_xpath(lang_locator)
         self.click_on_element(lang_btn)
 
-    
     def check_for_current_lang(self, desired_lang_code, desired_lang_full):
         """
         Complex methond is used to check language on the page.
@@ -88,7 +87,14 @@ class BaseSteamPage(BasePage, BaseElement):
         """
         if self.get_current_language() != desired_lang_code:
             self.change_lang_to(desired_lang_full)
-            time.sleep(5)
+            browser = Browser(self.driver)
+            browser.page_reload()
         else:
             pass
 
+    def navigate_to_download_page(self):
+        """
+        Help method is used to click on Global header download button.
+        """
+        btn = self.find_element_by_xpath(self.INSTALL_BTN_XPATH)
+        self.click_on_element(btn)
